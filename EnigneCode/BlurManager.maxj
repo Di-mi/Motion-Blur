@@ -7,7 +7,7 @@ import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
 import com.maxeler.maxcompiler.v2.managers.standard.Manager;
 import com.maxeler.maxcompiler.v2.managers.standard.Manager.IOType;
 
-class SobelManager {
+class BlurManager {
 
 	public static void main(String[] args) {
 		Manager manager = new Manager(new EngineParameters(args));
