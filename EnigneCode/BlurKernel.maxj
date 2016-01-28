@@ -1,0 +1,42 @@
+package blur;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+
+class BlurKernel extends Kernel {
+
+	protected BlurKernel(KernelParameters parameters) {
+		super(parameters);
+
+		DFEVar inputImg1 = io.input("array1", dfeInt(32));
+		DFEVar count = control.count.simpleCounter(64);
+
+
+
+		DFEVar First1 = stream.offset(inputImg1, -513);
+		DFEVar Last1 = stream.offset(inputImg1, 513);
+
+		DFEVar inputImg2 = io.input("array2", dfeInt(32));
+
+		DFEVar First2 = stream.offset(inputImg2, -513);
+		DFEVar Last2 = stream.offset(inputImg2, 513);
+
+		DFEVar inputImg3 = io.input("array3", dfeInt(32));
+
+		DFEVar First3 = stream.offset(inputImg3, -513);
+		DFEVar Last3 = stream.offset(inputImg3, 513);
+
+
+			inputImg1 = (count>512) ? count<(512*512-512) ? ((First1 + Last1 + inputImg1) /3):0 : 0;
+
+			inputImg2 = (count>512) ? count<(512*512-512) ? (First2 + Last2 + inputImg2) /3 :0 :0;
+
+			inputImg3 = (count>512) ? count<(512*512-512) ? (First3 + Last3 + inputImg3) /3 :0:0;
+
+
+		io.output("outImage1", inputImg1, inputImg1.getType());
+		io.output("outImage2", inputImg2, inputImg2.getType());
+		io.output("outImage3", inputImg3, inputImg3.getType());
+	}
+}
